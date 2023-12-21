@@ -1,6 +1,6 @@
 # Json shema for pricelist data
 
-[![Tests](https://github.com/erikroznbeker/pricelist-json-shema/workflows/build/badge.svg)](https://github.com/erikroznbeker/pricelist-json-shema/actions)
+![Tests](https://github.com/erikroznbeker/pricelist-json-shema/actions/workflows/php.yml/badge.svg)
 
 [schema.json](schema.json)  - json shema for pricelist data
 
