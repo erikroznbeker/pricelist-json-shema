@@ -11,17 +11,7 @@
         "type": "string"
       },
       "price": {
-        "anyOf": [
-          {
-            "type": "integer",
-            "minimum": 0
-          },
-          {
-            "type": "number",
-            "multipleOf": 0.01,
-            "minimum": 0
-          }
-        ]
+        "$ref": "#/$def/price"
       },
       "variations": {
         "type": "array",
@@ -32,17 +22,7 @@
               "type": "string"
             },
             "price": {
-              "anyOf": [
-                {
-                  "type": "integer",
-                  "minimum": 0
-                },
-                {
-                  "type": "number",
-                  "multipleOf": 0.01,
-                  "minimum": 0
-                }
-              ]
+              "$ref": "#/$def/price"
             }
           },
           "additionalProperties": false,
@@ -55,17 +35,33 @@
         "uniqueItems": true
       }
     },
-    "dependencies": {
-      "price": { "not": { "required": ["variations"] } },
-      "variations": { "not": { "required": ["price"] } }
-    },
     "oneOf": [
-      {"required": ["price"]},
-      {"required": ["variations"]}
+      {
+        "required": [
+          "name", "price"
+        ]
+      },
+      {
+        "required": [
+          "name", "variations"
+        ]
+      }
     ],
-    "additionalProperties": false,
-    "required": [
-      "name"
-    ]
+    "additionalProperties": false
+  },
+  "$def": {
+    "price": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "number",
+          "multipleOf": 0.01,
+          "minimum": 0
+        }
+      ]
+    }
   }
 }

@@ -1,10 +1,9 @@
 <?php
+
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Opis\JsonSchema\{
-    Validator,
-    ValidationResult,
     Helper,
 };
 
@@ -12,7 +11,7 @@ class VariationsPriceListTest extends TestCase
 {
     use JsonShemaValidator;
 
-    public function testVariationPriceList():void
+    public function testVariationPriceList(): void
     {
         $data = Helper::toJSON([
             [
@@ -35,7 +34,39 @@ class VariationsPriceListTest extends TestCase
         $this->assertTrue($result->isValid());
     }
 
-    public function testShouldFailIfHasPriceAndVariations():void
+    public function testComplexExample(): void
+    {
+        $json = '[
+          {
+            "name":"Pašareta",
+            "price":2.99
+          },
+          {
+            "group":"Pizza",
+            "name":"Margarita",
+            "price":10
+          },
+          {
+            "group":"Pizza",
+            "name":"Napolitana",
+            "variations":[
+              {
+                "name":"small",
+                "price":10.23
+              },
+              {
+                "name":"big", 
+                "price":15
+              }
+            ]
+          }
+        ]';
+        
+        $result = $this->validate(json_decode($json));
+        $this->assertTrue($result->isValid());
+    }
+
+    public function testShouldFailIfHasPriceAndVariations(): void
     {
         $data = Helper::toJSON([
             [
@@ -59,7 +90,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShoulfFailIfPriceAndVariationsAreMissing():void
+    public function testShoulfFailIfPriceAndVariationsAreMissing(): void
     {
 
         $data = Helper::toJSON([
@@ -73,7 +104,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShouldFailIfVariationNameIsMissing():void
+    public function testShouldFailIfVariationNameIsMissing(): void
     {
         $data = Helper::toJSON([
             [
@@ -91,7 +122,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShouldFailIfVariationPriceIsMissing():void
+    public function testShouldFailIfVariationPriceIsMissing(): void
     {
         $data = Helper::toJSON([
             [
@@ -109,7 +140,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShouldFailIfVariationPriceIsNegative():void
+    public function testShouldFailIfVariationPriceIsNegative(): void
     {
         $data = Helper::toJSON([
             [
@@ -127,7 +158,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShouldFailIfVariationPriceIsString():void
+    public function testShouldFailIfVariationPriceIsString(): void
     {
         $data = Helper::toJSON([
             [
@@ -145,7 +176,7 @@ class VariationsPriceListTest extends TestCase
         $this->assertFalse($result->isValid());
     }
 
-    public function testShouldFailIfVariationPriceHasMoreThan2Decimals():void
+    public function testShouldFailIfVariationPriceHasMoreThan2Decimals(): void
     {
         $data = Helper::toJSON([
             [
@@ -169,6 +200,19 @@ class VariationsPriceListTest extends TestCase
             [
                 'name' => 'Margherita',
                 'variations' => [],
+            ]
+        ]);
+
+        $result = $this->validate($data);
+        $this->assertFalse($result->isValid());
+    }
+
+    public function testShouldFailIfVariationsItemIsNotObject()
+    {
+        $data = Helper::toJSON([
+            [
+                'name' => 'Margherita',
+                'variations' => [1],
             ]
         ]);
 
