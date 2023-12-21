@@ -15,4 +15,3 @@ jobs:
         uses: php-actions/phpunit@master
         with:
           bootstrap: vendor/autoload.php
-          directory: tests
