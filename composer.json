@@ -1,8 +1,9 @@
 {
     "name": "erikroznbeker/pricelist_schema",
+    "description": "A JSON Schema validator for pricelist data",
+    "license": "MIT",
     "require": {
-        "opis/json-schema": "dev-fix/MultipleOf/multipleOf-not-working-as-expected",
-
+        "opis/json-schema": "dev-fix/MultipleOf/multipleOf-not-working-as-expected"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5",
