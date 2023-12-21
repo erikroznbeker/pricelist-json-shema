@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "group": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "price": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "number",
+            "multipleOf": 0.01,
+            "minimum": 0
+          }
+        ]
+      },
+      "variations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "price": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "number",
+                  "multipleOf": 0.01,
+                  "minimum": 0
+                }
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "price"
+          ]
+        },
+        "minItems": 1,
+        "uniqueItems": true
+      }
+    },
+    "dependencies": {
+      "price": { "not": { "required": ["variations"] } },
+      "variations": { "not": { "required": ["price"] } }
+    },
+    "oneOf": [
+      {"required": ["price"]},
+      {"required": ["variations"]}
+    ],
+    "additionalProperties": false,
+    "required": [
+      "name"
+    ]
+  }
+}
